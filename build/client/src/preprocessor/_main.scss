@@ -1,0 +1,19 @@
+.movie-info {
+  display: inline-block;
+  margin: .1em;
+  height: 25%;
+  width: 19.5%;
+  vertical-align: top;
+ 
+}
+.movie-info:hover {
+  box-shadow: 0 0 34px 0 #08f;
+}
+.movie-art {
+  width: 100%;
+}
+
+.movie-title {
+
+  word-wrap: break-word;
+}

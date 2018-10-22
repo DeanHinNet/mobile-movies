@@ -1,0 +1,10 @@
+@import 'reset';
+@import 'header';
+@import 'main';
+@import 'footer';
+
+#app {
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid red;
+}
