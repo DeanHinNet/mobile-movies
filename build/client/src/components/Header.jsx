@@ -1,4 +1,6 @@
 import React from 'react';
+import Settings from './authentication/Settings.jsx';
+import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
   constructor(props){
@@ -18,11 +20,12 @@ class Header extends React.Component {
         <div id='logo'>
         </div>
         <nav>
+          <Link to='/'>Movies</Link>
         </nav>
         <div className='search'>
         </div>
         <div className='profile'>
-          {this.props.isLoggedIn ? <button onClick={this.userLogout}>Welcome</button> : <button onClick={this.props.openModal}>Login</button>}
+          {this.props.isLoggedIn ? <Settings userLogout={this.props.userLogout}/> : <button onClick={this.props.openModal}>Login</button>}
         </div>
       </div>
     )

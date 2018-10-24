@@ -9,7 +9,9 @@ import Login from './authentication/Login.jsx';
 import axios from 'axios';
 import { instanceOf } from 'prop-types';
 
-import { withCookies, Cookies } from 'react-cookie';
+import { withCookies } from 'react-cookie';
+
+import Cookies from 'universal-cookie'
 
 const customStyles = {
   content : {
@@ -24,7 +26,6 @@ const customStyles = {
 
 Modal.setAppElement(document.getElementById('app'));
 
-
 class App extends React.Component {
 
     static propTypes = {
@@ -35,8 +36,13 @@ class App extends React.Component {
         super(props);
         
         this.state = {
+         
             modalIsOpen: false,
-            isLoggedIn: this.props.cookies.get('name') || false,
+            isLoggedIn: this.props.cookies.get('movieLoggedIn') || false,
+            response: {
+              message: '',
+              status: 0
+            }
         }
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -63,30 +69,50 @@ class App extends React.Component {
     }
     userLogin(credentials){
       //verify with server first than set
-  
-      credentials = {
-        email: 'user@home.com',
-        password: 'passwordX'
-      };
+      console.log('loggin in with', credentials);
 
       axios.post('/login', credentials)
       .then( (results) => {
         console.log('results', results);
         if(results.data.token){
           //set cookies
-          console.log('movieLoggedIn', results.data);
-          this.props.cookies.set('movieLoggedIn', results.data, {
+          console.log('movieLoggedIn', results.data.token);
+          
+          console.log('expires +10');
+          this.props.cookies.set('movieLoggedIn', results.data.token, {
+       
             path: '/',
-            maxAge: 30,
+            expires: new Date(Date.now() + 86400000)
           });
-          this.setState({name: results.data.name});
+          // this.state.cookies.set('movieLoggedIn', results.data.token, {
+            
+          //   path: '/',
+          //   expires: expires,
+          //   maxAge: 30,
+          // });
+          this.setState({
+            name: results.data.name,
+            isLoggedIn: true,
+            response: {
+              message: results.data.message,
+              status: results.data.status
+            }
+          }, ()=>{
+            console.log('cookies check', this.props.cookies.get('movieLoggedIn'))
+          });
 
         } else {
           //no a valid login
         }
       })
-      .catch( err => {
-        console.error('error');
+      .catch( (err) => {
+        console.log('error', err.response);
+        this.setState({
+          response: {
+            message: err.response.data.message,
+            status: err.response.data.status
+          }
+        })
       })
 
       // this.props.cookies.set('token', 'blue', {
@@ -99,9 +125,10 @@ class App extends React.Component {
 
     userLogout(){
       //verify with server first than set
-      this.props.cookies.remove('name');
+      console.log('loggin out function');
+      this.props.cookies.remove('movieLoggedIn');
       this.setState({isLoggedIn: false}) 
-      console.log('new cookies set', this.props.cookies.get('name'));
+      console.log('loggin out', this.props.cookies.get('movieLoggedIn'));
     }
     render() {
         return(
@@ -111,11 +138,15 @@ class App extends React.Component {
                 openModal={this.openModal} 
                 afterOpenModal={this.afterOpenModal} 
                 closeModal={this.closeModal}
+                isLoggedIn={this.state.isLoggedIn}
+                userLogout={this.userLogout}
               />
               <Main 
                 isLoggedIn={this.state.isLoggedIn} 
                 cookies={this.props.cookies} 
                 userLogin={this.userLogin}
+                userLogout={this.userLogout}
+                response={this.state.response}
               />
               <Footer />
               <Modal
@@ -125,7 +156,7 @@ class App extends React.Component {
                 style={customStyles}
                 contentLabel="Example Modal"
               >
-               <Login />
+               <Login userLogin={this.userLogin} response={this.state.response}/>
                <button onClick={this.closeModal}>close</button>
               </Modal>
             </div>
