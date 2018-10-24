@@ -8,10 +8,13 @@ class Header extends React.Component {
     }
   }
 
+  showModal(){
+
+  }
   render(){
     return(
       <div id='header'>
-      Header
+      HEADER 
         <div id='logo'>
         </div>
         <nav>
@@ -19,7 +22,7 @@ class Header extends React.Component {
         <div className='search'>
         </div>
         <div className='profile'>
-          <button onClick={this.props.openModal}>Login</button>
+          {this.props.isLoggedIn ? <button onClick={this.userLogout}>Welcome</button> : <button onClick={this.props.openModal}>Login</button>}
         </div>
       </div>
     )
