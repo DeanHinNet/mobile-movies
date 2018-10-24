@@ -5,12 +5,41 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const saltRounds = 6;
 const fs = require('fs');
+const schedule = require('node-schedule');
+const dirPath = __dirname + '/../movies/';
+
+schedule.scheduleJob('* */50 * * *', ()=>{
+  axios.get('http://www.snagfilms.com/apis/films.json?limit=30')
+    .then((movies)=>{
+      const content = JSON.stringify(movies.data);
+      const fileName = 'snagfilms.json';
+      const date = new Date();
+      const archiveName = `snagfilms [${date.getMonth() + '-' + date.getDay() + ' H' + date.getHours()}].json`;
+      fs.writeFile(dirPath + archiveName, content, 'utf8', (err)=>{
+        if (err) throw err;
+        fs.writeFile(dirPath + fileName, content, 'utf8', (err)=>{
+          if (err) throw err;
+          console.log('API downloaded', new Date());
+        })
+      });
+
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+});
 
 db.connect();
 
 module.exports = {
-  movies: ()=>{
+  movies: (callback)=>{
     //Get movies from file, return as API
+    console.log('getting movies');
+    let filePath = dirPath + 'snagfilms.json';
+    fs.readFile(filePath, 'utf8', (err, data)=>{
+      if (err) throw err;
+      callback(JSON.parse(data));
+    })
   },
   user: {
     isEmailPresent: (email, callback)=>{

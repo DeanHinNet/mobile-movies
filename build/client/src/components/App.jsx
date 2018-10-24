@@ -9,7 +9,9 @@ import Login from './authentication/Login.jsx';
 import axios from 'axios';
 import { instanceOf } from 'prop-types';
 
-import { withCookies, Cookies } from 'react-cookie';
+import { withCookies } from 'react-cookie';
+
+import Cookies from 'universal-cookie'
 
 const customStyles = {
   content : {
@@ -34,9 +36,9 @@ class App extends React.Component {
         super(props);
         
         this.state = {
+         
             modalIsOpen: false,
-            isLoggedIn: this.props.cookies.get('name') || false,
-            token: '',
+            isLoggedIn: this.props.cookies.get('movieLoggedIn') || false,
             response: {
               message: '',
               status: 0
@@ -74,19 +76,29 @@ class App extends React.Component {
         console.log('results', results);
         if(results.data.token){
           //set cookies
-          console.log('movieLoggedIn', results.data);
-          this.props.cookies.set('movieLoggedIn', results.data, {
+          console.log('movieLoggedIn', results.data.token);
+          
+          console.log('expires +10');
+          this.props.cookies.set('movieLoggedIn', results.data.token, {
+       
             path: '/',
-            maxAge: 30,
+            expires: new Date(Date.now() + 86400000)
           });
+          // this.state.cookies.set('movieLoggedIn', results.data.token, {
+            
+          //   path: '/',
+          //   expires: expires,
+          //   maxAge: 30,
+          // });
           this.setState({
             name: results.data.name,
             isLoggedIn: true,
-            token: results.data.token,
             response: {
               message: results.data.message,
               status: results.data.status
             }
+          }, ()=>{
+            console.log('cookies check', this.props.cookies.get('movieLoggedIn'))
           });
 
         } else {
@@ -113,9 +125,10 @@ class App extends React.Component {
 
     userLogout(){
       //verify with server first than set
-      this.props.cookies.remove('name');
+      console.log('loggin out function');
+      this.props.cookies.remove('movieLoggedIn');
       this.setState({isLoggedIn: false}) 
-      console.log('new cookies set', this.props.cookies.get('name'));
+      console.log('loggin out', this.props.cookies.get('movieLoggedIn'));
     }
     render() {
         return(
@@ -126,11 +139,13 @@ class App extends React.Component {
                 afterOpenModal={this.afterOpenModal} 
                 closeModal={this.closeModal}
                 isLoggedIn={this.state.isLoggedIn}
+                userLogout={this.userLogout}
               />
               <Main 
                 isLoggedIn={this.state.isLoggedIn} 
                 cookies={this.props.cookies} 
                 userLogin={this.userLogin}
+                userLogout={this.userLogout}
                 response={this.state.response}
               />
               <Footer />

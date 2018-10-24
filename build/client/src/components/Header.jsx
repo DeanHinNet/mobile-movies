@@ -1,5 +1,5 @@
 import React from 'react';
-import Profile from './authentication/Settings.jsx';
+import Settings from './authentication/Settings.jsx';
 import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
@@ -25,7 +25,7 @@ class Header extends React.Component {
         <div className='search'>
         </div>
         <div className='profile'>
-          {this.props.isLoggedIn ?  <Link to='/settings'>Settings</Link> : <button onClick={this.props.openModal}>Login</button>}
+          {this.props.isLoggedIn ? <Settings userLogout={this.props.userLogout}/> : <button onClick={this.props.openModal}>Login</button>}
         </div>
       </div>
     )
