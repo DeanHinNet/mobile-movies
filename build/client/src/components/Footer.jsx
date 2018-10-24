@@ -3,6 +3,7 @@ import React from 'react';
 const Footer = (prop) => {
   return(
     <div id='footer'>
+    FOOTER
       <div id='sitemap'>
         About Us
         Privacy Policy

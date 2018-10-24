@@ -1,40 +1,20 @@
 import React from 'react';
-import axios from 'axios';
 
-class Main extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      movies: []
-    };
-  }
-  componentDidMount(){
-    axios.get('/api/movies')
-    .then((results)=> {
-      console.log('movies', results.data.films.film)
-      console.log('images', results.data.films.film[0].images.image[0].src);
-      this.setState({
-        movies: results.data.films.film
-      })
-    })  
-    .catch((err)=> {
-      console.error(err);
-    })
-  }
-  render(){
-    return(
-      <div id='main'> 
-        {this.state.movies.map((movie)=>{
-          return (
-            <div className='movie-info'>
-              <img className='movie-art' src={movie.images.image[0].src} />
-              <h3 className="movie-title">{movie.title}</h3>
-            </div>
-          )
-        })}
-      </div>
-    )
-  }
+import {Switch, Route} from 'react-router-dom';
+
+import Login from './authentication/Login.jsx';
+import MovieList from './movies/MovieList.jsx';
+
+const Main = (props) => {
+  return(
+    <div id='main'> 
+      <Switch>
+        <Route exact path='/' render={()=>
+              props.isLoggedIn ? <MovieList /> : <Login />}
+        />
+      </Switch>
+    </div>
+  )
 }
 
 export default Main;
