@@ -24,7 +24,6 @@ const customStyles = {
 
 Modal.setAppElement(document.getElementById('app'));
 
-
 class App extends React.Component {
 
     static propTypes = {
@@ -37,6 +36,11 @@ class App extends React.Component {
         this.state = {
             modalIsOpen: false,
             isLoggedIn: this.props.cookies.get('name') || false,
+            token: '',
+            response: {
+              message: '',
+              status: 0
+            }
         }
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -63,11 +67,7 @@ class App extends React.Component {
     }
     userLogin(credentials){
       //verify with server first than set
-  
-      credentials = {
-        email: 'user@home.com',
-        password: 'passwordX'
-      };
+      console.log('loggin in with', credentials);
 
       axios.post('/login', credentials)
       .then( (results) => {
@@ -79,14 +79,28 @@ class App extends React.Component {
             path: '/',
             maxAge: 30,
           });
-          this.setState({name: results.data.name});
+          this.setState({
+            name: results.data.name,
+            isLoggedIn: true,
+            token: results.data.token,
+            response: {
+              message: results.data.message,
+              status: results.data.status
+            }
+          });
 
         } else {
           //no a valid login
         }
       })
-      .catch( err => {
-        console.error('error');
+      .catch( (err) => {
+        console.log('error', err.response);
+        this.setState({
+          response: {
+            message: err.response.data.message,
+            status: err.response.data.status
+          }
+        })
       })
 
       // this.props.cookies.set('token', 'blue', {
@@ -111,11 +125,13 @@ class App extends React.Component {
                 openModal={this.openModal} 
                 afterOpenModal={this.afterOpenModal} 
                 closeModal={this.closeModal}
+                isLoggedIn={this.state.isLoggedIn}
               />
               <Main 
                 isLoggedIn={this.state.isLoggedIn} 
                 cookies={this.props.cookies} 
                 userLogin={this.userLogin}
+                response={this.state.response}
               />
               <Footer />
               <Modal
@@ -125,7 +141,7 @@ class App extends React.Component {
                 style={customStyles}
                 contentLabel="Example Modal"
               >
-               <Login />
+               <Login userLogin={this.userLogin} response={this.state.response}/>
                <button onClick={this.closeModal}>close</button>
               </Modal>
             </div>

@@ -10,10 +10,16 @@ app
   .use(bodyParser.json())
   .use(express.static(__dirname + '/../client/dist/'));
 
-app.post('/login', (req, res)=>{
+app.post('/register', (req, res)=>{
   model.user.create(req.body, (results)=>{
-    console.log('callbacks')
-    res.status(201).send(results);
+    res.status(results.status).send(results);
+  });
+})
+
+app.post('/login', (req, res)=>{
+  model.user.login(req.body, (results)=>{
+    console.log('login results', results)
+    res.status(results.status).send(results);
   });
 })
 

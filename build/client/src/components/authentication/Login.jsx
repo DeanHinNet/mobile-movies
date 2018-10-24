@@ -16,31 +16,46 @@ class Login extends React.Component {
     super(props);
     this.state = {
       modalIsOpen: false,
-      isLoggedin: this.props.isLoggedIn
+      isLoggedin: this.props.isLoggedIn,
+      email: '',
+      password: '',
+      message: '',
+      status: 0
     }
    this.handleInput = this.handleInput.bind(this);
-
+   this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleInput(e){
-    
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
-  handleSubmit(){
-    this.props.userLogin
+  handleSubmit(e){
+   
+    e.preventDefault();
+    console.log(this.state.password)
+   
+    this.props.userLogin({
+      email: this.state.email,
+      password: this.state.password
+    })
   }
   render(){
+    
     return(  
       <div>
         <h2 ref={subtitle => this.subtitle = subtitle}>Login</h2>   
         <form>
           <div>
-            <label htmlFor="username">Username</label>
-            <input type='text' />
+            <label htmlFor="email">Email</label>
+            <input id='email' name='email' placeholder='bob@home.com' type='text' value={this.state.email} onChange={this.handleInput} required/>
           </div>
           <div>
             <label htmlFor="password">Password</label>
-            <input type='text' />
+            <input id='password' name='password' placeholder='********' type='password' value={this.state.password} onChange={this.handleInput}required/>
           </div>
-          <button onClick={this.handleSubmit}>Login</button>
+          <button onClick={this.handleSubmit}>SUBMIT</button>
+          <p>{this.props.response.status === 0 || this.props.response.status === 201 ? '' : this.props.response.message}</p>
         </form>
       </div>
     )
@@ -49,6 +64,7 @@ class Login extends React.Component {
 
 export default Login;
 /*
+ 
   <div id='login'>
         <form action="">
         </form>
