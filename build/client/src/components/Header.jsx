@@ -15,7 +15,7 @@ class Header extends React.Component {
   }
   render(){
     return(
-      <div id='header'>
+      <header>
         <div id='hamburger'>
         </div>
         <div id='logo'>
@@ -31,7 +31,7 @@ class Header extends React.Component {
           <p id='display-name'>{this.props.name ? this.props.name : 'Mike'}</p>
           {this.props.isLoggedIn ? <Settings userLogout={this.props.userLogout}/> : <button onClick={this.props.openModal}>Login</button>}
         </div>
-      </div>
+      </header>
     )
   }
 }
