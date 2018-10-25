@@ -1,10 +1,11 @@
-#footer {
+footer {
   width: 100%;
   background-color: #000;
   color: #7C7D7E;
   font-size: .85em;
   text-align: center;
- 
+  height: 8em;
+  padding-top: .8em;
   a {
     text-decoration: none;
     color: #fff;
@@ -26,5 +27,15 @@
   }
   img {
     width: 70px;
+  }
+}
+@media only screen and (max-width : 614px) {
+  footer{
+    height: 16em;
+  }
+  #sitemap {
+    a {
+      display: block;
+    }
   }
 }
