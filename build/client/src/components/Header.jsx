@@ -12,6 +12,7 @@ class Header extends React.Component {
 
   render(){
     console.log('FIRST NAME', this.props.first_name);
+    console.log('logged in', this.props.isLoggedIn);
     return(
       <header>
         <div id='hamburger'>

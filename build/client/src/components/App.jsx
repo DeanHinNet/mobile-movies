@@ -34,9 +34,10 @@ class App extends React.Component {
 
     constructor(props){
         super(props);
+
         this.state = {
             modalIsOpen: false,
-            isLoggedIn: this.props.cookies.get('movieLoggedIn') || false,
+            isLoggedIn:  typeof this.props.cookies.get('movieLoggedIn') != 'undefined' || false,
             first_name: this.props.cookies.get('first_name') || '',
             response: {
               message: '',
@@ -121,8 +122,9 @@ class App extends React.Component {
             expires: new Date(Date.now() + 86400000),
           });
           this.closeModal();
+          //console.log('set first name', JSON.stringify(results.data.first_name));
           this.setState({
-            first_name: results.data.name,
+            first_name: results.data.first_name,
             isLoggedIn: true,
             response: {
               message: results.data.message,
@@ -150,7 +152,10 @@ class App extends React.Component {
       console.log('loggin out function');
       this.props.cookies.remove('movieLoggedIn');
       this.props.cookies.remove('first_name');
-      this.setState({isLoggedIn: false}) 
+      this.setState({
+        first_name: '',
+        isLoggedIn: false
+      }) 
       console.log('loggin out', this.props.cookies.get('movieLoggedIn'));
     }
     render() {
@@ -184,7 +189,7 @@ class App extends React.Component {
                 contentLabel="Example Modal"
               > 
                <button onClick={this.closeModal}>Close</button>
-               <Login userLogin={this.userLogin} response={this.state.response}/>
+               <Login userLogin={this.userLogin} response={this.state.response} userRegister={this.userRegister}/>
               </Modal>
             </div>
         )

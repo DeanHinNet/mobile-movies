@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import validator from 'validator';
 
 const customStyles = {
   content : {
@@ -19,6 +20,7 @@ class Login extends React.Component {
       modalIsOpen: false,
       isLoggedin: this.props.isLoggedIn,
       signup: false,
+      errors: [],
       first_name: '',
       last_name: '',
       email: '',
@@ -49,34 +51,69 @@ class Login extends React.Component {
   }
   handleSubmit(e){
     e.preventDefault();
-    console.log(this.state.password)
-   
-    if(e.target.name === 'login'){
-      this.props.userLogin({
-        email: this.state.email,
-        password: this.state.password
-      })
-    } else {
-      this.props.userRegister({
-        first_name: this.state.first_name,
-        last_name: this.state.first_name,
-        email: this.state.email,
-        password: this.state.password
-      })
-    }
+    //Validate user input
+    let inValid = false;
+    let errors = [];
+    const selection = e.target.name;
+    //reset errors
+    this.setState({
+      errors: []
+    }, () => {
+      //Check if email is valid.
+      if(!validator.isEmail(this.state.email)){
+        inValid = true;
+        errors.push('Email is not valid.');
+      }
+      if(this.state.password.length < 8){
+        inValid = true;
+        errors.push('Password must be 8 characters or longer.')
+      }
+      if(!inValid){
+        if(selection === 'login'){
+          this.props.userLogin({
+            email: this.state.email,
+            password: this.state.password
+          })
+        } else {
+          if(this.state.first_name === ''){
+            inValid = true;
+            errors.push('First name cannot be blank.')
+          }
+          if(!inValid){
+            this.props.userRegister({
+              first_name: this.state.first_name,
+              last_name: this.state.first_name,
+              email: this.state.email,
+              password: this.state.password
+            });
+          } else {
+            //Send back errors
+            this.setState({
+              errors: errors
+            })
+          }
+        }
+      } else {
+        //Send back errors
+        this.setState({
+          errors: errors
+        })
+      }
+      
+    })
   }
-  
   
 
   render(){
-    
     return(  
       <div id='login-form'>
-       
         <form>
-       <a href='#' name='login' onClick={this.handleClick}>Log In</a> | <a href='#' name='signup' onClick={this.handleClick}>Sign Up</a>
+          <a href='#' name='login' onClick={this.handleClick}>Log In</a> | 
+          <a href='#' name='signup' onClick={this.handleClick}>Sign Up</a>
 
-          {this.state.signup ? <Signup handleInput={this.handleInput} name={this.state.name}/> : <div></div>}
+          {this.state.signup ? 
+          <Signup handleInput={this.handleInput} name={this.state.name}/> : ''}
+
           <div id='input-email'>
             <label htmlFor="email">Email</label>
             <input id='email' name='email' placeholder='bob@home.com' type='text' value={this.state.email} onChange={this.handleInput} required/>
@@ -84,23 +121,40 @@ class Login extends React.Component {
 
           <div>
             <label htmlFor="password">Password</label>
-            <input id='password' name='password' placeholder='********' type='password' value={this.state.password} onChange={this.handleInput}required/>
+            <input id='password' name='password' placeholder='********' type='password' value={this.state.password} onChange={this.handleInput} required/>
           </div>
-          {this.state.signup ? <button name='register' onClick={this.handleSubmit}>Signup</button> : <button name='login' onClick={this.handleSubmit}>Login</button>}
-          <p>{this.props.response.status === 0 || this.props.response.status === 201 ? '' : this.props.response.message}</p>
+
+          {this.state.signup ? 
+          <button name='register' onClick={this.handleSubmit}>Signup</button> : <button name='login' onClick={this.handleSubmit}>Login</button>}
+
+          <p id='response'>{this.props.response.status === 0 || 
+            this.props.response.status === 201 ? 
+            '' : this.props.response.message}</p>
+
+          <ul id='display-errors'>{this.state.errors.map((error)=>{
+            return(
+              <li>{error}</li>)
+          })}</ul>
+
         </form>
       </div>
     )
   }
 }
 function Signup(props){
-  return( <div id='input-name' >
-  <label htmlFor='first_name'>First Name</label>
-  <input name='first_name' placeholder='bob' type='text' value={props.first_name} onChange={props.handleInput} required/>
-  <label htmlFor="last_name">Last Name</label>
-  <input name='last_name' placeholder='bob' type='text' value={props.last_name} onChange={props.handleInput} required/>
-</div>)
+  return( 
+  <div id='input-name'>
+    <div>
+      <label htmlFor='first_name'>First Name</label>
+      <input name='first_name' placeholder='Bob' type='text' value={props.first_name} onChange={props.handleInput} required/>
+    </div>
+    <div>
+      <label htmlFor="last_name">Last Name</label>
+      <input name='last_name' placeholder='Pants' type='text' value={props.last_name} onChange={props.handleInput} required/>
+    </div>
+  </div>)
 }
+
 export default Login;
 /*
  
