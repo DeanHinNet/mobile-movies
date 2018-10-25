@@ -1,3 +1,22 @@
+#main {
+  #login-form {
+    margin-top: 30%;
+  }
+}
+
+#login-form {
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  form {
+    max-width: 50%;
+    display: block;
+  }
+  h3 {
+    display: block;
+  }
+}
+
 #login {
   a {
   -webkit-tap-highlight-color: transparent;

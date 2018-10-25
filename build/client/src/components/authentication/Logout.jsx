@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 class Logout extends React.Component {
   constructor(){
@@ -15,7 +16,10 @@ class Logout extends React.Component {
   }
   render(){
     return(
-      <div>You have been logged out</div>
+      <div>You have been logged out
+         <Redirect to="/" />
+      </div>
+     
     )
   }
 }

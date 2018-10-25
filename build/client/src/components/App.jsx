@@ -34,9 +34,7 @@ class App extends React.Component {
 
     constructor(props){
         super(props);
-        
         this.state = {
-         
             modalIsOpen: false,
             isLoggedIn: this.props.cookies.get('movieLoggedIn') || false,
             response: {
@@ -90,6 +88,7 @@ class App extends React.Component {
           //   expires: expires,
           //   maxAge: 30,
           // });
+          this.closeModal();
           this.setState({
             name: results.data.name,
             isLoggedIn: true,
@@ -97,8 +96,6 @@ class App extends React.Component {
               message: results.data.message,
               status: results.data.status
             }
-          }, ()=>{
-            console.log('cookies check', this.props.cookies.get('movieLoggedIn'))
           });
 
         } else {
@@ -139,6 +136,7 @@ class App extends React.Component {
                 afterOpenModal={this.afterOpenModal} 
                 closeModal={this.closeModal}
                 isLoggedIn={this.state.isLoggedIn}
+                userLogin={this.userLogin}
                 userLogout={this.userLogout}
               />
               <Main 

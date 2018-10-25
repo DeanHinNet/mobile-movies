@@ -23,7 +23,7 @@ class Main extends React.Component {
   }
   render(){
     return(
-      <div id='main'> 
+      <div id='movie-list'> 
         {this.state.movies.map((movie)=>{
           return (
             <div className='movie-info'>
