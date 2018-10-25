@@ -16,6 +16,8 @@ class Header extends React.Component {
   render(){
     return(
       <div id='header'>
+        <div id='hamburger'>
+        </div>
         <div id='logo'>
         </div>
         <nav>
@@ -23,8 +25,7 @@ class Header extends React.Component {
           <Link to='/'>Movies</Link>
           <Link to='/'>Shows</Link>
         </nav>
-        <div className='search'>
-          Search
+        <div id='search'>
         </div>
         <div className='profile'>
           <p id='display-name'>{this.props.name ? this.props.name : 'Mike'}</p>

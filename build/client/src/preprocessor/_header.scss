@@ -3,7 +3,6 @@
   top: 0;
   left: 0;
   height: 4em;
-  border: 1px solid blue;
   width: 100%;
 
   background-color: #000;
@@ -20,43 +19,87 @@
       margin: 0 15px;
     }
   }
-  #logo {
-    background-image: url('/assets/pics/logo.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 200px;
-    height: 50px;
-    margin: 5px;
-    display: inline-block;
-  }
-  .search {
-    display: inline-block;
-  }
   .profile {
     display: inline-block;
     position: absolute;
     right: 10px;
     top: 35%;
   }
-  #settings {
+}
+#logo {
+  background-image: url('/assets/pics/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 200px;
+  height: 50px;
+  margin: 5px;
+  display: inline-block;
+}
+#settings {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  height: 100px;
+  width: 100px;
+  background-color: lightgrey;
+  visibility: hidden;
+  a {
+    display: block;
+  }
+}
+#settings:hover {
+  visibility: visible;
+}
+#display-name {
+  margin-right: 10px;
+}
+#display-name:hover + #settings{
+  visibility: visible;
+}
+
+#hamburger {
+  display: none;
+}
+
+#search {
+  display: inline-block;
+  background-image: url('/assets/pics/search.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 3em;
+  height: 3em;
+  margin-bottom: .4em;
+  margin-left: 2em;
+}
+
+@media only screen and (max-width : 614px) {
+  #header {
+    nav{
+      display: none;  
+    }
+    .profile {
+      display: none;
+    }
+   
+  }
+  #hamburger {
+    display: inline-block;
+    background-image: url('/assets/pics/hamburger.png');
+    background-size: contain;
+    height: 1.5em;
+    width: 1.5em;
+    position: absolute;
+    left: .5em;
+    top: 25%;
+  }
+  #logo {
+    position: absolute;
+    left: 50%;
+    margin-left: -100px;
+  }
+  #search {
     position: absolute;
     right: 10px;
-    top: 15px;
-    height: 100px;
-    width: 100px;
-    background-color: lightgrey;
-    visibility: hidden;
-    a {
-      display: block;
-    }
-  }
-  #settings:hover {
-    visibility: visible;
-  }
-  #display-name {
-    margin-right: 10px;
-  }
-  #display-name:hover + #settings{
-    visibility: visible;
+    top: 10%;
   }
 }

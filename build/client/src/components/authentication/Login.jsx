@@ -43,9 +43,10 @@ class Login extends React.Component {
   render(){
     
     return(  
-      <div>
-        <h2 ref={subtitle => this.subtitle = subtitle}>Login</h2>   
+      <div id='login-form'>
+       
         <form>
+        <h3>Please login.</h3>
           <div>
             <label htmlFor="email">Email</label>
             <input id='email' name='email' placeholder='bob@home.com' type='text' value={this.state.email} onChange={this.handleInput} required/>
