@@ -7,3 +7,4 @@ npm-debug.log
 *.txt
 *.pdf
 .sass-cache
+bundle.js
