@@ -14,13 +14,13 @@ const Main = (props) => {
     <div id='main'> 
       <Switch>
         <Route exact path='/' render={()=>
-              props.isLoggedIn ? <MovieList /> : <Login userLogin={props.userLogin} response={props.response}/>}
+              props.isLoggedIn ? <MovieList /> : <Login userLogin={props.userLogin} response={props.response} userRegister={props.userRegister}/>}
         />
         <Route exact path='/settings' render={()=>
-              props.isLoggedIn ? <Settings /> : <Login userLogin={props.userLogin} response={props.response}/>}
+              props.isLoggedIn ? <Settings /> : <Login userLogin={props.userLogin} response={props.response} userRegister={props.userRegister}/>}
         />
         <Route exact path='/profile' render={()=>
-              props.isLoggedIn ? <Profile /> : <Login userLogin={props.userLogin} response={props.response}/>}
+              props.isLoggedIn ? <Profile /> : <Login userLogin={props.userLogin} response={props.response} userRegister={props.userRegister}/>}
         />  
         <Route exact path='/logout' render={()=>
               <Logout userLogout={props.userLogout}/>}

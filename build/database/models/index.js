@@ -69,11 +69,12 @@ module.exports = {
         modified_at: now,
         token: ''
       }
+      console.log('checking email')
       module.exports.user.isEmailPresent(params.email, (present)=>{
         if(!present){
-
-          module.exports.user.isUsernamePresent(params.username, (present)=>{
-            if(!present){
+          console.log('checking email')
+          // module.exports.user.isUsernamePresent(params.username, (present)=>{
+          //   if(!present){
 
               bcrypt.genSalt(saltRounds, (err, salt)=>{
                 if (err) throw err;
@@ -93,20 +94,20 @@ module.exports = {
                     if (err) throw err;
                     callback({
                       token: params.token,
-                      name: params.first_name,
+                      first_name: params.first_name,
                       message: 'Your account has been created',
                       status: 201
                     });
                   });
                 })
               })
-            } else {
-              callback({
-                message: 'Username is taken. Please choose a new username.',
-                status: 422
-              });
-            }
-          });
+            // } else {
+            //   callback({
+            //     message: 'Username is taken. Please choose a new username.',
+            //     status: 422
+            //   });
+            // }
+          // });
         } else {
           callback({
             message: 'Email already exists. Please login.',
@@ -134,7 +135,7 @@ module.exports = {
                 if(today < expires){
                   console.log('today is less than expire');
                   callback({
-                    name: data[0].name,
+                    first_name: data[0].first_name,
                     token: data[0].token,
                     status: 201,
                     message: 'Login successful!'
@@ -154,7 +155,7 @@ module.exports = {
                   db.query(queryStr, updates, (err) => {
                     if (err) throw err;
                     callback({
-                      name: data.name,
+                      first_name: data.first_name,
                       token: updates.token,
                       status: 201,
                       message: 'New login successful!'

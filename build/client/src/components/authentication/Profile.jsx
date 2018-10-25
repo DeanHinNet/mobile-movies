@@ -9,10 +9,11 @@ class Profile extends React.Component {
   }
   render(){
     return(
-      <div>
+      <div id='profile'>
         Email
         Name
         Etc.
+        Coming Soon!
       </div>
     )
   }
