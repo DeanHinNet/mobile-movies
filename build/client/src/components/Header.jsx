@@ -16,15 +16,18 @@ class Header extends React.Component {
   render(){
     return(
       <div id='header'>
-      HEADER 
         <div id='logo'>
         </div>
         <nav>
+          <Link to='/'>Home</Link>
           <Link to='/'>Movies</Link>
+          <Link to='/'>Shows</Link>
         </nav>
         <div className='search'>
+          Search
         </div>
         <div className='profile'>
+          <p id='display-name'>{this.props.name ? this.props.name : 'Mike'}</p>
           {this.props.isLoggedIn ? <Settings userLogout={this.props.userLogout}/> : <button onClick={this.props.openModal}>Login</button>}
         </div>
       </div>

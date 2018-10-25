@@ -8,7 +8,7 @@ const fs = require('fs');
 const schedule = require('node-schedule');
 const dirPath = __dirname + '/../movies/';
 
-schedule.scheduleJob('* */50 * * *', ()=>{
+schedule.scheduleJob('12 * * * *', ()=>{
   axios.get('http://www.snagfilms.com/apis/films.json?limit=30')
     .then((movies)=>{
       const content = JSON.stringify(movies.data);

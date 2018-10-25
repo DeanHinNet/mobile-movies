@@ -1,0 +1,62 @@
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4em;
+  border: 1px solid blue;
+  width: 100%;
+
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  nav {
+    display: inline-block;
+    position: relative;
+    bottom: 30%;
+    a {
+      text-decoration: none;
+      color: #fff;
+      margin: 0 15px;
+    }
+  }
+  #logo {
+    background-image: url('/assets/pics/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 50px;
+    margin: 5px;
+    display: inline-block;
+  }
+  .search {
+    display: inline-block;
+  }
+  .profile {
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    top: 35%;
+  }
+  #settings {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    height: 100px;
+    width: 100px;
+    background-color: lightgrey;
+    visibility: hidden;
+    a {
+      display: block;
+    }
+  }
+  #settings:hover {
+    visibility: visible;
+  }
+  #display-name {
+    margin-right: 10px;
+  }
+  #display-name:hover + #settings{
+    visibility: visible;
+  }
+}
