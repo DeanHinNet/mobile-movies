@@ -1,0 +1,158 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4em;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  a {
+    text-decoration: none;
+    color: #fff;
+    margin: 0 1em;
+  }
+  nav {
+    display: inline-block;
+    position: relative;
+    bottom: 35%;
+  }
+  .profile {
+    display: inline-block;
+    position: absolute;
+    right: 1.5em;
+    bottom: 35%;
+  }
+}
+
+#main {  
+  #profile {
+    margin-top: 25%;
+    text-align: center;
+  }
+}
+
+#logo {
+  background-image: url('/assets/pics/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 200px;
+  height: 50px;
+  margin: 5px;
+  display: inline-block;
+}
+
+#settings {
+  position: absolute;
+  right: 1.5em;
+  top: 1em;
+  height: 5.5em;
+  width: 6.5em;
+  background-color: lightgrey;
+  visibility: hidden;
+  a {
+    color: #000;
+    font-weight: normal;
+    font-size: 1em;
+    display: block;
+    margin: .8em;
+  }
+}
+
+#settings:hover {
+  visibility: visible;
+}
+
+#display-name {
+  margin-right: 1.5em;
+}
+
+#display-name:hover + #settings{
+  visibility: visible;
+}
+
+#hamburger {
+  display: none;
+}
+
+#search {
+  display: inline-block;
+  background-image: url('/assets/pics/search.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 3em;
+  height: 3em;
+  margin-bottom: .4em;
+  margin-left: 2em;
+  display: none;
+}
+
+@media only screen and (max-width : 614px) {
+  header {
+    nav {
+      position: absolute;
+      background-color: #000;
+      top: 65px;
+      width: 100px;
+      height: 12em;
+      a {
+        display: block;
+        margin-top: .75em;
+        margin-bottom: .75em;
+      }
+    }
+    .profile {
+      position: absolute;
+      top: 10em;
+      left: 0;
+      width: 100px;
+      height: 1em;
+    }
+  }
+
+  #settings {
+    visibility: visible;
+    background-color: #000;
+    width: 100px;
+    height: 50px;
+    left: 0;
+    a {
+      color: #fff;
+      font-weight: bold;
+      margin-top: .75em;
+      margin-bottom: .75em;
+    }
+  }
+
+  #display-name {
+    display: none;
+  }
+
+  #hamburger {
+    display: inline-block;
+    background-image: url('/assets/pics/hamburger.png');
+    background-size: contain;
+    height: 1.5em;
+    width: 1.5em;
+    position: absolute;
+    left: .5em;
+    top: 25%;
+  }
+
+  #logo {
+    position: absolute;
+    left: 50%;
+    margin-left: -100px;
+  }
+
+  #search {
+    position: absolute;
+    right: 1.5em;
+    top: 10%;
+  }
+
+  .mobile-hide {
+    display: none;
+  }
+}

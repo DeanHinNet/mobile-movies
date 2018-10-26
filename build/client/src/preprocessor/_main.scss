@@ -1,19 +1,48 @@
+#main {
+  padding-top: 4em;
+  flex-grow: 1;
+}
+
+#movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 .movie-info {
   display: inline-block;
-  margin: .1em;
-  height: 25%;
-  width: 19.5%;
+  margin: .25em;
+  min-height: 10em;
   vertical-align: top;
- 
 }
+
 .movie-info:hover {
   box-shadow: 0 0 34px 0 #08f;
 }
+
 .movie-art {
   width: 100%;
 }
 
 .movie-title {
-
   word-wrap: break-word;
+  padding: .25em;
+}
+
+@media only screen and (min-width : 768px) {
+  .movie-info {
+    flex-basis: 23.9%;
+  }
+}
+
+@media only screen and (min-width: 615px) and (max-width : 767px) {
+  .movie-info {
+    flex-basis: 32%;
+  }
+}
+ 
+@media only screen and (max-width : 614px) {
+  .movie-info {
+    flex-basis: 45%;
+  }
 }

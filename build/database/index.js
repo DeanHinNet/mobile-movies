@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const credentials = require('./../../config.js');
 const fs = require('fs')
+
 module.exports = connection = mysql.createConnection({
     host: credentials.host,
     user: credentials.user,

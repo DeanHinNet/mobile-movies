@@ -8,22 +8,20 @@ class Main extends React.Component {
       movies: []
     };
   }
+
   componentDidMount(){
     axios.get('/api/movies')
     .then((results)=> {
-      console.log('movies', results.data.films.film)
-      console.log('images', results.data.films.film[0].images.image[0].src);
-      this.setState({
-        movies: results.data.films.film
-      })
+      this.setState({ movies: results.data.films.film })
     })  
     .catch((err)=> {
       console.error(err);
     })
   }
+
   render(){
     return(
-      <div id='main'> 
+      <div id='movie-list'> 
         {this.state.movies.map((movie)=>{
           return (
             <div className='movie-info'>

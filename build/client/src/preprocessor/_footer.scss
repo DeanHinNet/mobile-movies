@@ -1,0 +1,42 @@
+footer {
+  width: 100%;
+  background-color: #000;
+  color: #7C7D7E;
+  font-size: .85em;
+  text-align: center;
+  height: 8em;
+  padding-top: .8em;
+  a {
+    text-decoration: none;
+    color: #fff;
+    margin: 1em;
+  }
+}
+
+#sitemap {
+  margin: .8em 0;
+  a {
+    font-weight: bold;
+  }
+}
+
+#copyright {
+  padding: .8em 0;
+  p {
+    padding-bottom: .8em;
+  }
+  img {
+    width: 5.25em;
+  }
+}
+
+@media only screen and (max-width : 614px) {
+  footer{
+    height: 16em;
+  }
+  #sitemap {
+    a {
+      display: block;
+    }
+  }
+}
