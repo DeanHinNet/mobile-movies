@@ -8,3 +8,4 @@ npm-debug.log
 *.pdf
 .sass-cache
 bundle.js
+snagfilms *.json
