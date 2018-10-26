@@ -11,7 +11,7 @@ class Settings extends React.Component {
   }
   render(){
     return(
-      <div id='settings'> 
+      <div id='settings' className={this.props.hideHamburger ? 'mobile-hide' : ''}onClick={this.props.hideMenu}> 
         <Link to='/profile'>Profile</Link>
         <Link to='/logout'>Log Out</Link>
       </div>
