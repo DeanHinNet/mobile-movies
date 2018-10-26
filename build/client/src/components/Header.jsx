@@ -6,29 +6,52 @@ class Header extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      hideHamburger: true,
       item: []
     }
+    this.toggleHamburger = this.toggleHamburger.bind(this);
+    this.hideMenu = this.hideMenu.bind(this);
+    this.openModalHideMenu = this.openModalHideMenu.bind(this);
   }
 
+  toggleHamburger(){
+    this.setState(prevState => ({
+      hideHamburger: !prevState.hideHamburger
+    }));
+  }
+  hideMenu(){
+    this.setState({
+      hideHamburger: true
+    })
+  }
+  openModalHideMenu(){
+  
+    this.setState({
+      hideHamburger: true
+    }, ()=>{
+      this.props.openModal();
+    })
+  }
   render(){
     console.log('FIRST NAME', this.props.first_name);
     console.log('logged in', this.props.isLoggedIn);
     return(
       <header>
-        <div id='hamburger'>
-        </div>
         <div id='logo'>
         </div>
-        <nav>
+        <div id='hamburger' onClick={this.toggleHamburger}>
+        </div>
+        
+        <nav className={this.state.hideHamburger ? 'mobile-hide' : ''} onClick={this.hideMenu}>
           <Link to='/'>Home</Link>
           <Link to='/'>Movies</Link>
           <Link to='/'>Shows</Link>
         </nav>
         <div id='search'>
         </div>
-        <div className='profile'>
+        <div className='profile mobile-hide'>
           <p id='display-name'>{this.props.first_name ? 'Hello '+ this.props.first_name : ''}</p>
-          {this.props.isLoggedIn ? <Settings userLogout={this.props.userLogout}/> : <a href='#' onClick={this.props.openModal}>Login</a>}
+          {this.props.isLoggedIn ? <Settings hideHamburger={this.state.hideHamburger} hideMenu={this.hideMenu} userLogout={this.props.userLogout}/> : <a href='#' onClick={this.openModalHideMenu}>Login</a>}
         </div>
       </header>
     )
