@@ -11,6 +11,7 @@ class Header extends React.Component {
     }
     this.toggleHamburger = this.toggleHamburger.bind(this);
     this.hideMenu = this.hideMenu.bind(this);
+    this.openModalHideMenu = this.openModalHideMenu.bind(this);
   }
 
   toggleHamburger(){
@@ -21,6 +22,14 @@ class Header extends React.Component {
   hideMenu(){
     this.setState({
       hideHamburger: true
+    })
+  }
+  openModalHideMenu(){
+  
+    this.setState({
+      hideHamburger: true
+    }, ()=>{
+      this.props.openModal();
     })
   }
   render(){
@@ -42,7 +51,7 @@ class Header extends React.Component {
         </div>
         <div className='profile mobile-hide'>
           <p id='display-name'>{this.props.first_name ? 'Hello '+ this.props.first_name : ''}</p>
-          {this.props.isLoggedIn ? <Settings hideHamburger={this.state.hideHamburger} hideMenu={this.hideMenu} userLogout={this.props.userLogout}/> : <a href='#' onClick={this.props.openModal}>Login</a>}
+          {this.props.isLoggedIn ? <Settings hideHamburger={this.state.hideHamburger} hideMenu={this.hideMenu} userLogout={this.props.userLogout}/> : <a href='#' onClick={this.openModalHideMenu}>Login</a>}
         </div>
       </header>
     )
