@@ -55,7 +55,7 @@ class Header extends React.Component {
             hideHamburger={this.state.hideHamburger} 
             hideMenu={this.hideMenu} 
             userLogout={this.props.userLogout}/> : 
-          <a href='#' onClick={this.openModalHideMenu}>Login</a>}
+          <a href='#' onClick={this.openModalHideMenu} className={this.state.hideHamburger ? 'mobile-hide' : ''} >Login</a>}
         </div>
       </header>
     )
