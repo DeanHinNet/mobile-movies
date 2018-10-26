@@ -34,7 +34,6 @@ class Login extends React.Component {
   }
   handleClick(e){
     if(e.target.name === 'signup'){
-      console.log('set to true');
       this.setState({
         signup: true
       })
@@ -156,10 +155,3 @@ function Signup(props){
 }
 
 export default Login;
-/*
- 
-  <div id='login'>
-        <form action="">
-        </form>
-      </div>
-*/

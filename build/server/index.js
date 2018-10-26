@@ -20,7 +20,6 @@ app.post('/register', (req, res)=>{
 
 app.post('/login', (req, res)=>{
   model.user.login(req.body, (results)=>{
-    console.log('login results', results)
     res.status(results.status).send(results);
   });
 })

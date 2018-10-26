@@ -56,7 +56,6 @@ class App extends React.Component {
     }
   
     openModal() {
-      console.log('open modal')
       this.setState({modalIsOpen: true});
     }
   
@@ -75,7 +74,6 @@ class App extends React.Component {
       .then( (results) => {
         if(results.data.token){
           //set cookies
-          console.log('results', results);
           this.props.cookies.set('movieLoggedIn', results.data.token, {
             path: '/',
             expires: new Date(Date.now() + 86400000)
@@ -112,7 +110,6 @@ class App extends React.Component {
       .then( (results) => {
         if(results.data.token){
           //set cookies
-          console.log('results', results);
           this.props.cookies.set('movieLoggedIn', results.data.token, {
             path: '/',
             expires: new Date(Date.now() + 86400000),
@@ -149,14 +146,12 @@ class App extends React.Component {
 
     userLogout(){
       //verify with server first than set
-      console.log('loggin out function');
       this.props.cookies.remove('movieLoggedIn');
       this.props.cookies.remove('first_name');
       this.setState({
         first_name: '',
         isLoggedIn: false
       }) 
-      console.log('loggin out', this.props.cookies.get('movieLoggedIn'));
     }
     render() {
         return(

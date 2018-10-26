@@ -11,7 +11,6 @@ class Logout extends React.Component {
   }
   componentDidMount(){
     //logout
-    console.log('loggin user out');
     this.props.userLogout();    
   }
   render(){

@@ -69,10 +69,10 @@ module.exports = {
         modified_at: now,
         token: ''
       }
-      console.log('checking email')
+
       module.exports.user.isEmailPresent(params.email, (present)=>{
         if(!present){
-          console.log('checking email')
+      
           // module.exports.user.isUsernamePresent(params.username, (present)=>{
           //   if(!present){
 
@@ -86,7 +86,7 @@ module.exports = {
                   let expires = new Date();
                   expires.setDate(expires.getDate() + 30);
     
-                  console.log('expire date', expires);
+       
                   params.token = token;
                   params.token_expire = expires; 
                   params.password = hash;
@@ -122,18 +122,13 @@ module.exports = {
         if(present){
           const queryStr = 'SELECT * FROM users WHERE email=?';
           db.query(queryStr, params.email, (err, data) => {
-
-            console.log('email check data', data);
-            console.log('submitted password', params.password);
-            console.log('db password',data[0].password)
             bcrypt.compare(params.password, data[0].password, (err, res)=>{
-              console.log('password check', res);
+        
               if (err) throw err;
               if (res) {
                 const today = new Date();
                 let expires = new Date(data[0].token_expire);
                 if(today < expires){
-                  console.log('today is less than expire');
                   callback({
                     first_name: data[0].first_name,
                     token: data[0].token,
@@ -145,7 +140,6 @@ module.exports = {
                   //Update token if expired.
                   expires = new Date();
                   expires.setDate(today.getDate() + 30);
-                  console.log('email', params.email)
                   const queryStr = `UPDATE users SET ? WHERE email='${data[0].email}'`;
                   const token = bcrypt.hashSync('bacon', 2);
                   const updates = {
@@ -179,12 +173,6 @@ module.exports = {
           })
         }
       })
-    },
-    update: ()=>{
-
-    },
-    delete: ()=>{
-
     }
   }
 }

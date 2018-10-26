@@ -11,8 +11,6 @@ class Main extends React.Component {
   componentDidMount(){
     axios.get('/api/movies')
     .then((results)=> {
-      console.log('movies', results.data.films.film)
-      console.log('images', results.data.films.film[0].images.image[0].src);
       this.setState({
         movies: results.data.films.film
       })
