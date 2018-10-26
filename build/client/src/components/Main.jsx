@@ -1,12 +1,9 @@
 import React from 'react';
-
 import {Switch, Route} from 'react-router-dom';
-
 import Login from './authentication/Login.jsx';
 import Logout from './authentication/Logout.jsx';
 import Settings from './authentication/Settings.jsx';
 import Profile from './authentication/Profile.jsx';
-
 import MovieList from './movies/MovieList.jsx';
 
 const Main = (props) => {

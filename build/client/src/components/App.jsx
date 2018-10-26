@@ -1,40 +1,23 @@
 import React from 'react';
+import axios from 'axios';
+import Modal from 'react-modal';
+
+import { instanceOf } from 'prop-types';
+import { withCookies } from 'react-cookie';
+import Cookies from 'universal-cookie'
+
+import Login from './authentication/Login.jsx';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import Main from './Main.jsx';
 
-import Modal from 'react-modal';
-
-import Login from './authentication/Login.jsx';
-import axios from 'axios';
-import { instanceOf } from 'prop-types';
-
-import { withCookies } from 'react-cookie';
-
-import Cookies from 'universal-cookie'
-
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
-
-Modal.setAppElement(document.getElementById('app'));
-
 class App extends React.Component {
-
     static propTypes = {
       cookies: instanceOf(Cookies).isRequired
     };
 
     constructor(props){
         super(props);
-
         this.state = {
             modalIsOpen: false,
             isLoggedIn:  typeof this.props.cookies.get('movieLoggedIn') != 'undefined' || false,
@@ -45,12 +28,12 @@ class App extends React.Component {
             }
         }
         this.openModal = this.openModal.bind(this);
-        this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.userRegister = this.userRegister.bind(this);
         this.userLogin = this.userLogin.bind(this);
         this.userLogout = this.userLogout.bind(this);
     }
+
     handleInput(){
       this.props.userLogin();
     }
@@ -59,14 +42,10 @@ class App extends React.Component {
       this.setState({modalIsOpen: true});
     }
   
-    afterOpenModal() {
-      // references are now sync'd and can be accessed.
-      // this.subtitle.style.color = '#f00';
-    }
-  
     closeModal() {
       this.setState({modalIsOpen: false});
     }
+
     userRegister(credentials){
       //verify with server first than set
 
@@ -105,7 +84,6 @@ class App extends React.Component {
 
     userLogin(credentials){
       //verify with server first than set
-
       axios.post('/login', credentials)
       .then( (results) => {
         if(results.data.token){
@@ -153,6 +131,7 @@ class App extends React.Component {
         isLoggedIn: false
       }) 
     }
+
     render() {
         return(
             <div id='spa'>  
@@ -180,15 +159,29 @@ class App extends React.Component {
                 isOpen={this.state.modalIsOpen}
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeModal}
-                style={customStyles}
-                contentLabel="Example Modal"
-              > 
+                style={customStyles}> 
                <button onClick={this.closeModal}>Close</button>
-               <Login userLogin={this.userLogin} response={this.state.response} userRegister={this.userRegister}/>
+               <Login 
+               userLogin={this.userLogin} 
+               response={this.state.response} 
+               userRegister={this.userRegister}/>
               </Modal>
             </div>
         )
     }
 }
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
+Modal.setAppElement(document.getElementById('app'));
 
 export default withCookies(App);

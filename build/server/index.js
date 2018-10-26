@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 8080;
 const app = express();
-const movies = require('./../database/movies/snagfilms.json');
 
 const model = require('./../database/models/index.js');
 const path = require('path');
@@ -37,6 +36,7 @@ app.get('/*', function(req, res) {
     }
   })
 })
+
 app.listen(port, ()=>{
     console.log(`Movies listening on ${port}`);
 })

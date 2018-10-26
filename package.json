@@ -4,8 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test-init": "./node_modules/jasmine/bin/jasmine.js init",
-    "test": "./node_modules/jasmine/bin/jasmine.js",
     "react-dev": "webpack -d -p --watch --config webpack.config.dev.js",
     "server-dev": "nodemon build/server/index.js",
     "scss-dev": "sass --watch --style compressed build/client/src/preprocessor:build/client/dist/assets/css",

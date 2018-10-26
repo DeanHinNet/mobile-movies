@@ -1,17 +1,5 @@
 import React from 'react';
-import Modal from 'react-modal';
 import validator from 'validator';
-
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
 
 class Login extends React.Component {
   constructor(props){
@@ -24,37 +12,33 @@ class Login extends React.Component {
       first_name: '',
       last_name: '',
       email: '',
-      password: '',
-      message: '',
-      status: 0
+      password: ''
     }
    this.handleInput = this.handleInput.bind(this);
    this.handleSubmit = this.handleSubmit.bind(this);
    this.handleClick = this.handleClick.bind(this);
   }
+
   handleClick(e){
     if(e.target.name === 'signup'){
-      this.setState({
-        signup: true
-      })
+      this.setState({ signup: true })
     } else {
-      this.setState({
-        signup: false
-      })
+      this.setState({ signup: false })
     }
   }
+
   handleInput(e){
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+    this.setState({ [e.target.name]: e.target.value })
   }
+
   handleSubmit(e){
     e.preventDefault();
     //Validate user input
+    const selection = e.target.name;
     let inValid = false;
     let errors = [];
-    const selection = e.target.name;
-    //reset errors
+
+    //Reset errors
     this.setState({
       errors: []
     }, () => {
@@ -63,10 +47,13 @@ class Login extends React.Component {
         inValid = true;
         errors.push('Email is not valid.');
       }
+
+      //Check if password is long enough
       if(this.state.password.length < 8){
         inValid = true;
         errors.push('Password must be 8 characters or longer.')
       }
+
       if(!inValid){
         if(selection === 'login'){
           this.props.userLogin({
@@ -87,22 +74,16 @@ class Login extends React.Component {
             });
           } else {
             //Send back errors
-            this.setState({
-              errors: errors
-            })
+            this.setState({ errors: errors })
           }
         }
       } else {
         //Send back errors
-        this.setState({
-          errors: errors
-        })
+        this.setState({ errors: errors })
       }
-      
     })
   }
   
-
   render(){
     return(  
       <div id='login-form'>
@@ -126,21 +107,26 @@ class Login extends React.Component {
           {this.state.signup ? 
           <button name='register' onClick={this.handleSubmit}>Signup</button> : <button name='login' onClick={this.handleSubmit}>Login</button>}
 
-          <p id='response'>{this.props.response.status === 0 || 
+          <p id='response'>
+            {this.props.response.status === 0 || 
             this.props.response.status === 201 ? 
-            '' : this.props.response.message}</p>
+            '' : this.props.response.message}
+          </p>
 
-          <ul id='display-errors'>{this.state.errors.map((error)=>{
-            return(
-              <li>{error}</li>)
-          })}</ul>
+          <ul id='display-errors'>
+            {this.state.errors.map((error)=>{
+              return(
+                <li>{error}</li>)
+            })}
+          </ul>
 
         </form>
       </div>
     )
   }
 }
-function Signup(props){
+
+const Signup = (props) => {
   return( 
   <div id='input-name'>
     <div>

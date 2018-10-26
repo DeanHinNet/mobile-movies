@@ -8,17 +8,17 @@ class Main extends React.Component {
       movies: []
     };
   }
+
   componentDidMount(){
     axios.get('/api/movies')
     .then((results)=> {
-      this.setState({
-        movies: results.data.films.film
-      })
+      this.setState({ movies: results.data.films.film })
     })  
     .catch((err)=> {
       console.error(err);
     })
   }
+
   render(){
     return(
       <div id='movie-list'> 
