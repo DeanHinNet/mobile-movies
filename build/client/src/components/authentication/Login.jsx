@@ -49,10 +49,10 @@ class Login extends React.Component {
       }
 
       //Check if password is long enough
-      if(this.state.password.length < 8){
-        inValid = true;
-        errors.push('Password must be 8 characters or longer.')
-      }
+      // if(this.state.password.length < 8){
+      //   inValid = true;
+      //   errors.push('Password must be 8 characters or longer.')
+      // }
 
       if(!inValid){
         if(selection === 'login'){

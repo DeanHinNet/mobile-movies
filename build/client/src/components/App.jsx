@@ -11,29 +11,102 @@ import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import Main from './Main.jsx';
 
+import menuOptions from './../../../database/data.json';
+
 class App extends React.Component {
     static propTypes = {
       cookies: instanceOf(Cookies).isRequired
     };
 
     constructor(props){
-        super(props);
-        this.state = {
-            modalIsOpen: false,
-            isLoggedIn:  typeof this.props.cookies.get('movieLoggedIn') != 'undefined' || false,
-            first_name: this.props.cookies.get('first_name') || '',
-            response: {
-              message: '',
-              status: 0
-            }
-        }
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.userRegister = this.userRegister.bind(this);
-        this.userLogin = this.userLogin.bind(this);
-        this.userLogout = this.userLogout.bind(this);
+      super(props);
+      this.state = {
+          modalIsOpen: false,
+          isLoggedIn:  typeof this.props.cookies.get('movieLoggedIn') != 'undefined' || false,
+          first_name: this.props.cookies.get('first_name') || '',
+          response: {
+            message: '',
+            status: 0
+          },
+          top: 0,
+          left: 0,
+          height: 130,
+          width: 130,
+          visible: false
+      }
+      this.openModal = this.openModal.bind(this);
+      this.closeModal = this.closeModal.bind(this);
+      this.userRegister = this.userRegister.bind(this);
+      this.userLogin = this.userLogin.bind(this);
+      this.userLogout = this.userLogout.bind(this);
+
+      this._handleClickRight = this._handleClickRight.bind(this);
+      this._handleClickLeft = this._handleClickLeft.bind(this);
+      this._setPosition = this._setPosition.bind(this);
+      this.coords = React.createRef();
+      this._buildMenu = this._buildMenu.bind(this);
     }
 
+    componentDidMount(){
+      this._buildMenu();
+      window.addEventListener('contextmenu', this._handleClickRight);
+      window.addEventListener('click', this._handleClickLeft);
+    }
+    componentDidUnmount(){
+      window.removeEventListener('contextmenu', this._handleClickRight);
+      window.removeEventListener('click', this._handleClickLeft);
+      
+    }
+    _buildMenu(){
+      let menuBuild = ``;
+
+      const recurseSubmenu = (arr)=>{
+        if(arr.length === 1){
+          menuBuild += `<li><a href='#${arr[0].id}'>${arr[0].title}</a></li>`;
+          return false;
+        } else {
+          menuBuild += `<li class='dropdown'>`;
+            menuBuild += `<a href='#${arr[0].id}'>${arr[0].title} &rarr;</a>`;
+            menuBuild += `<ul class='submenu'>`;
+              recurseSubmenu(arr.slice(1, arr.length));
+            menuBuild += `</ul>`;
+          menuBuild += `</li>`
+        }
+      }
+
+      Object.keys(menuOptions).forEach((key)=>{
+        recurseSubmenu(menuOptions[key]);
+      });
+      this.coords.current.innerHTML = menuBuild;
+     
+      this.setState({
+        height: Object.keys(menuOptions).length * 21
+      });
+    }
+    _setPosition(){
+      let menuAttr = this.coords.current.style;
+
+      menuAttr.top = this.state.top;
+      menuAttr.left = this.state.left;
+      menuAttr.display = 'block';
+    }
+    _handleClickRight(e){
+      e.preventDefault();
+      this.setState({
+        top: e.pageY,
+        left: e.pageX,
+        visible: true
+      }, this._setPosition);
+    }
+    _handleClickLeft(e){
+      const widthOutOfBounds = e.pageX < this.state.left || e.pageX > this.state.left + this.state.width;
+
+      const heightOutOfBounds = e.pageY < this.state.top || e.pageY > this.state.top + this.state.height;
+
+      if(widthOutOfBounds || heightOutOfBounds){
+        this.coords.current.style.display = 'none';
+      }
+    }
     handleInput(){
       this.props.userLogin();
     }
@@ -134,7 +207,9 @@ class App extends React.Component {
 
     render() {
         return(
-            <div id='spa'>  
+            <div id='spa'>
+              <ul className='menu' ref={this.coords}>
+              </ul>
               <Header 
                 cookies={this.props.cookies} 
                 openModal={this.openModal} 
