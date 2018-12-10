@@ -8,8 +8,9 @@
     "server-dev": "nodemon build/server/index.js",
     "scss-dev": "sass --watch --style compressed build/client/src/preprocessor:build/client/dist/assets/css",
     "dev": "concurrently \"npm run react-dev\" \"npm run scss-dev\" \" npm run server-dev\"",
+    "production":"concurrently \"npm run build\" \"forever start --minUptime 1000 --spinSleepTime 1000 build/server/index.js\" ",
     "build": "webpack -d -p --config webpack.config.prod.js",
-    "start": "concurrently \"npm run build\" \"forever start --minUptime 1000 --spinSleepTime 1000 build/server/index.js\" "
+    "start":  "forever start --minUptime 1000 --spinSleepTime 1000 build/server/index.js"
   },
   "repository": {
     "type": "git",
